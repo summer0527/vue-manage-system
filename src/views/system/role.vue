@@ -1,6 +1,6 @@
 <template>
     <div>
-        <TableSearch :query="query" :options="searchOpt" :search="handleSearch" />
+        <TableSearch :query="query" :options="searchOpt" :search="handleSearch" :isExport="isExport" :isAdd='isAdd' :isToggle="isToggle"/>
         <div class="container">
 
             <TableCustom :columns="columns" :tableData="tableData" :total="page.total" :viewFunc="handleView"
@@ -51,7 +51,11 @@ const query = reactive({
     name: '',
 });
 const searchOpt = ref<FormOptionList[]>([
-    { type: 'input', label: '角色名称：', prop: 'name' }
+   
+
+    { type: 'select', label: '用户画像类型：', prop: 'name',placeholder:'请输入用户画像类型：',opts:[{label:"学生",value:'1'},{label:"教师",value:'2'}]},
+    { type: 'datetime', label: '创建时间：', prop: 'date',placeholder:'请选择创建时间'  },
+    { type: 'select', label: '启用/停用', prop: 'isAble',opts:[{label:"启用",value:'1'},{label:"停用",value:'2'}],placeholder:'请选择启用/停用'},
 ])
 const handleSearch = () => {
     changePage(1);
@@ -60,11 +64,9 @@ const handleSearch = () => {
 // 表格相关
 let columns = ref([
     { type: 'index', label: '序号', width: 55, align: 'center' },
-    { prop: 'name', label: '角色名称' },
-    { prop: 'key', label: '角色标识' },
-    { prop: 'status', label: '状态' },
-    { prop: 'permissions', label: '权限管理' },
-    { prop: 'operator', label: '操作', width: 250 },
+    { prop: 'name', label: '用户画像类型' },
+    { prop: 'key', label: '创建时间' }
+   
 ])
 const page = reactive({
     index: 1,
@@ -96,6 +98,9 @@ const options = ref<FormOption>({
 const visible = ref(false);
 const isEdit = ref(false);
 const rowData = ref({});
+const isExport=ref(false)
+const isToggle = ref(false)
+const isAdd= ref(false)
 const handleEdit = (row: Role) => {
     rowData.value = { ...row };
     isEdit.value = true;

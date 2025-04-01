@@ -1,47 +1,53 @@
 <template>
-    <div>
-        <div class="user-container">
+    <div >
+        <div class="user-container" style="display: flex;justify-content: center;align-items: center;">
             <el-card class="user-profile" shadow="hover" :body-style="{ padding: '0px' }">
                 <div class="user-profile-bg"></div>
                 <div class="user-avatar-wrap">
-                    <el-avatar class="user-avatar" :size="120" :src="avatarImg" />
+                    <el-upload
+    class="avatar-uploader"
+    action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+    :show-file-list="false"
+    :on-success="handleAvatarSuccess"
+    :before-upload="beforeAvatarUpload"
+  >
+    <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+    <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+  </el-upload>
+                   
                 </div>
                 <div class="user-info">
                     <div class="info-name">{{ name }}</div>
-                    <div class="info-desc">
-                        <span>@lin-xin</span>
-                        <el-divider direction="vertical" />
-                        <el-link href="https://lin-xin.gitee.io" target="_blank">lin-xin.gitee.io</el-link>
-                    </div>
-                    <div class="info-desc">FE Developer</div>
-                    <div class="info-icon">
-                        <a href="https://github.com/lin-xin" target="_blank"> <i class="el-icon-lx-github-fill"></i></a>
-                        <i class="el-icon-lx-qq-fill"></i>
-                        <i class="el-icon-lx-facebook-fill"></i>
-                        <i class="el-icon-lx-twitter-fill"></i>
-                    </div>
+                    
+                   
                 </div>
-                <div class="user-footer">
-                    <div class="user-footer-item">
-                        <el-statistic title="Follower" :value="1800" />
-                    </div>
-                    <div class="user-footer-item">
-                        <el-statistic title="Following" :value="666" />
-                    </div>
-                    <div class="user-footer-item">
-                        <el-statistic title="Total Post" :value="888" />
-                    </div>
+                <div style="padding: 10px;box-sizing: border-box;height: 300px;">
+                    <el-form   label-width="auto">
+                    <el-form-item label="用户名：">
+                                <el-input  v-model="form.old"></el-input>
+                            </el-form-item>
+                            <el-form-item label="旧密码：">
+                                <el-input type="password" v-model="form.old"></el-input>
+                            </el-form-item>
+                            <el-form-item label="新密码：">
+                                <el-input type="password" v-model="form.new"></el-input>
+                            </el-form-item>
+                          
+                            
+                        </el-form>
+                        <div style="display: flex;justify-content: center;align-items: center;">
+                            <el-button type="primary" @click="onSubmit">保存</el-button>
+                        </div>
                 </div>
+                
             </el-card>
-            <el-card
+            <!-- <el-card
                 class="user-content"
                 shadow="hover"
                 :body-style="{ padding: '20px 50px', height: '100%', boxSizing: 'border-box' }"
             >
                 <el-tabs tab-position="left" v-model="activeName">
-                    <el-tab-pane name="label1" label="消息通知" class="user-tabpane">
-                        <TabsComp />
-                    </el-tab-pane>
+                   
                     <el-tab-pane name="label2" label="我的头像" class="user-tabpane">
                         <div class="crop-wrap" v-if="activeName === 'label2'">
                             <vueCropper
@@ -76,23 +82,9 @@
                             </el-form-item>
                         </el-form>
                     </el-tab-pane>
-                    <el-tab-pane name="label4" label="赞赏作者" class="user-tabpane">
-                        <div class="plugins-tips">
-                            如果该框架
-                            <el-link href="https://github.com/lin-xin/vue-manage-system" target="_blank"
-                                >vue-manage-system</el-link
-                            >
-                            对你有帮助，那就请作者喝杯饮料吧！<el-icon>
-                                <ColdDrink />
-                            </el-icon>
-                            加微信号 linxin_20 探讨问题。
-                        </div>
-                        <div>
-                            <img src="https://lin-xin.gitee.io/images/weixin.jpg" />
-                        </div>
-                    </el-tab-pane>
+                   
                 </el-tabs>
-            </el-card>
+            </el-card> -->
         </div>
     </div>
 </template>
@@ -100,10 +92,10 @@
 <script setup lang="ts" name="ucenter">
 import { reactive, ref } from 'vue';
 import { VueCropper } from 'vue-cropper';
+import { ElMessage } from 'element-plus'
 import 'vue-cropper/dist/index.css';
 import avatar from '@/assets/img/img.jpg';
-import TabsComp from '../element/tabs.vue';
-
+import type { UploadProps } from 'element-plus'
 const name = localStorage.getItem('vuems_name');
 const form = reactive({
     new1: '',
@@ -112,13 +104,32 @@ const form = reactive({
 });
 const onSubmit = () => {};
 
-const activeName = ref('label1');
+const activeName = ref('label2');
 
 const avatarImg = ref(avatar);
 const imgSrc = ref(avatar);
 const cropImg = ref('');
 const cropper: any = ref();
+const imageUrl = ref(avatar)
 
+const handleAvatarSuccess: UploadProps['onSuccess'] = (
+  response,
+  uploadFile
+) => {
+    console.log('ppopopopopopopopopop')
+  imageUrl.value = URL.createObjectURL(uploadFile.raw!)
+}
+
+const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
+  if (rawFile.type !== 'image/jpeg') {
+    ElMessage.error('Avatar picture must be JPG format!')
+    return false
+  } else if (rawFile.size / 1024 / 1024 > 2) {
+    ElMessage.error('Avatar picture size can not exceed 2MB!')
+    return false
+  }
+  return true
+}
 const setImage = (e: any) => {
     const file = e.target.files[0];
     if (!file.type.includes('image/')) {
@@ -142,6 +153,32 @@ const saveAvatar = () => {
 </script>
 
 <style scoped>
+.avatar-uploader .avatar {
+    border-radius:50% ;
+  width: 178px;
+  height: 178px;
+  display: block;
+}
+.avatar-uploader .el-upload {
+  border: 1px dashed var(--el-border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: var(--el-transition-duration-fast);
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: var(--el-color-primary);
+}
+
+.el-icon.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  text-align: center;
+}
 .user-container {
     display: flex;
 }

@@ -6,6 +6,8 @@
 					<!-- 文本框、数字框、下拉框、日期框、开关、上传 -->
 					<el-input v-if="item.type === 'input'" v-model="form[item.prop]" :disabled="item.disabled"
 						:placeholder="item.placeholder" clearable></el-input>
+						<el-input v-else-if="item.type === 'textarea'" v-model="form[item.prop]" :disabled="item.disabled"
+						:placeholder="item.placeholder"  :rows="2" type="textarea"clearable></el-input>
 					<el-input-number v-else-if="item.type === 'number'" v-model="form[item.prop]"
 						:disabled="item.disabled" controls-position="right"></el-input-number>
 					<el-select v-else-if="item.type === 'select'" v-model="form[item.prop]" :disabled="item.disabled"

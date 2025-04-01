@@ -14,4 +14,14 @@ theme.initTheme();
 </script>
 <style>
 @import './assets/css/main.css';
+.el-collapse-item__header{
+    background: #E0EAFF !important;
+    text-indent: 10px !important;
+    font-family: OPPOSans !important;
+font-size: 16px !important;
+font-weight: bold !important;
+line-height: 22px !important;
+height: 36px  !important;
+color: #FFFFFF !important;
+}
 </style>

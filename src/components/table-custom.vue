@@ -36,26 +36,28 @@
             </div>
         </div>
         <el-table class="mgb20" :style="{ width: '100%' }" border :data="tableData" :row-key="rowKey"
-            @selection-change="handleSelectionChange" table-layout="auto">
+            @selection-change="handleSelectionChange" table-layout="auto" @cell-click='handleClickCell'>
+            <el-table-column type="selection" width="55" v-if="isSelection" align="center"/>
+
             <template v-for="item in columns" :key="item.prop">
                 <el-table-column v-if="item.visible" :prop="item.prop" :label="item.label" :width="item.width"
                     :type="item.type" :align="item.align || 'center'">
-
+                    
+                   
                     <template #default="{ row, column, $index }" v-if="item.type === 'index'">
                         {{ getIndex($index) }}
                     </template>
                     <template #default="{ row, column, $index }" v-if="!item.type">
                         <slot :name="item.prop" :rows="row" :index="$index">
+                            <!-- <template v-if="item.prop == 'isAble'">
+                                <el-switch v-model="row[item.prop]" />
+                               
+                            </template> -->
                             <template v-if="item.prop == 'operator'">
-                                <el-button type="warning" size="small" :icon="View" @click="viewFunc(row)">
-                                    查看
-                                </el-button>
-                                <el-button type="primary" size="small" :icon="Edit" @click="editFunc(row)">
-                                    编辑
-                                </el-button>
-                                <el-button type="danger" size="small" :icon="Delete" @click="handleDelete(row)">
-                                    删除
-                                </el-button>
+                                <el-button v-show='item.operatorType.indexOf("view")!="-1"' :icon="Tickets" plain type="text" @click="viewFunc(row)" style="font-size: 24px;"/>
+                                <el-button  v-show='item.operatorType.indexOf("Edit")!="-1"' :icon="Edit" plain type="text" @click="editFunc(row)" style="font-size: 24px;"/>
+                                <el-button  v-show='item.operatorType.indexOf("Delete")!="-1"' :icon="Delete" plain type="text" @click="handleDelete(row)" style="font-size: 24px;"/>
+
                             </template>
                             <span v-else-if="item.formatter">
                                 {{ item.formatter(row[item.prop]) }}
@@ -75,7 +77,7 @@
 
 <script setup lang="ts">
 import { toRefs, PropType, ref } from 'vue'
-import { Delete, Edit, View, Refresh } from '@element-plus/icons-vue';
+import { Delete, Edit, View, Refresh,Tickets } from '@element-plus/icons-vue';
 import { ElMessageBox } from 'element-plus';
 
 const props = defineProps({
@@ -94,12 +96,16 @@ const props = defineProps({
     },
     hasToolbar: {
         type: Boolean,
-        default: true
+        default: false
     },
     //  分页相关
     hasPagination: {
         type: Boolean,
         default: true
+    },
+    isSelection:{
+        type: Boolean,
+        default: true 
     },
     total: {
         type: Number,
@@ -164,10 +170,27 @@ columns.value.forEach((item) => {
 
 // 当选择项发生变化时会触发该事件
 const multipleSelection = ref([])
+
+import { defineEmits } from 'vue';
+
+const emit = defineEmits(['sendMessage','cellData']);
+
 const handleSelectionChange = (selection: any[]) => {
     multipleSelection.value = selection
+    
+    console.log(multipleSelection.value,'090909229029029029209202902')
+    emit('sendMessage', multipleSelection.value);
 }
+// 点击单元格事件
+const handleClickCell=(row, column, cell, event)=>{
+   
+  const cellValueData = row[column.property];
+  console.log(row,'row')
+  console.log(column,'column')
 
+  emit('cellData',{content:cellValueData,name:column.label})
+
+}
 // 当前页码变化的事件
 const handleCurrentChange = (val: number) => {
     props.changePage(val)

@@ -1,124 +1,97 @@
 <template>
     <div>
-        <el-row :gutter="20" class="mgb20">
-            <el-col :span="6">
-                <el-card shadow="hover" body-class="card-body">
-                    <el-icon class="card-icon bg1">
+        <el-row :gutter="20" class="mgb20" >
+            <el-col :span="12" @click="hanleTip('stu')">
+                <el-card shadow="hover"  :body-class="isStudent?'card-body card-bodyHover':'card-body'" :class="isStudent?'shadow':''">
+                    <!-- <el-icon class="card-icon bg1">
                         <User />
-                    </el-icon>
+                    </el-icon> -->
                     <div class="card-content">
+                        <div class="studenNumber">学生数量
                         <countup class="card-num color1" :end="6666" />
-                        <div>用户访问量</div>
+                            <span class="people">人</span>
+                        </div>
+
                     </div>
                 </el-card>
             </el-col>
-            <el-col :span="6">
-                <el-card shadow="hover" body-class="card-body">
-                    <el-icon class="card-icon bg2">
+            <el-col :span="12" @click="hanleTip('te')">
+                <el-card shadow="hover" :body-class="!isStudent?'card-body2 card-bodyHover2':'card-body2'" :class="!isStudent?'shadow':''">
+                    <!-- <el-icon class="card-icon bg2">
                         <ChatDotRound />
-                    </el-icon>
+                    </el-icon> -->
                     <div class="card-content">
-                        <countup class="card-num color2" :end="168" />
-                        <div>系统消息</div>
+                        <div class="studenNumber">教师数量
+                            <countup class="card-num color2" :end="168" />
+                            <span class="people">人</span>
+
+                        </div>
+
+                       
                     </div>
                 </el-card>
             </el-col>
-            <el-col :span="6">
-                <el-card shadow="hover" body-class="card-body">
-                    <el-icon class="card-icon bg3">
-                        <Goods />
-                    </el-icon>
-                    <div class="card-content">
-                        <countup class="card-num color3" :end="8888" />
-                        <div>商品数量</div>
-                    </div>
-                </el-card>
-            </el-col>
-            <el-col :span="6">
-                <el-card shadow="hover" body-class="card-body">
-                    <el-icon class="card-icon bg4">
-                        <ShoppingCartFull />
-                    </el-icon>
-                    <div class="card-content">
-                        <countup class="card-num color4" :end="568" />
-                        <div>今日订单量</div>
-                    </div>
-                </el-card>
-            </el-col>
+          
         </el-row>
 
         <el-row :gutter="20" class="mgb20">
-            <el-col :span="18">
+            <el-col :span="8">
                 <el-card shadow="hover">
                     <div class="card-header">
-                        <p class="card-header-title">订单动态</p>
-                        <p class="card-header-desc">最近一周订单状态，包括订单成交量和订单退货量</p>
+                        <p class="card-header-title">场景1使用情况</p>
+                        <!-- <p class="card-header-desc">最近一周订单状态，包括订单成交量和订单退货量</p> -->
                     </div>
                     <v-chart class="chart" :option="dashOpt1" />
                 </el-card>
             </el-col>
-            <el-col :span="6">
+            <el-col :span="8">
                 <el-card shadow="hover">
                     <div class="card-header">
-                        <p class="card-header-title">品类分布</p>
-                        <p class="card-header-desc">最近一个月销售商品的品类情况</p>
+                        <p class="card-header-title">场景2使用情况</p>
                     </div>
-                    <v-chart class="chart" :option="dashOpt2" />
+                    <v-chart class="chart" :option="dashOpt1" />
+                </el-card>
+            </el-col>
+            <el-col :span="8">
+                <el-card shadow="hover">
+                    <div class="card-header">
+                        <p class="card-header-title">场景3使用情况</p>
+                    </div>
+                    <v-chart class="chart" :option="dashOpt1" />
                 </el-card>
             </el-col>
         </el-row>
         <el-row :gutter="20">
-            <el-col :span="7">
-                <el-card shadow="hover" :body-style="{ height: '400px' }">
+            <el-col :span="8">
+                <el-card shadow="hover">
                     <div class="card-header">
-                        <p class="card-header-title">时间线</p>
-                        <p class="card-header-desc">最新的销售动态和活动信息</p>
+                        <p class="card-header-title">场景4使用情况</p>
                     </div>
-                    <el-timeline>
-                        <el-timeline-item v-for="(activity, index) in activities" :key="index" :color="activity.color">
-                            <div class="timeline-item">
-                                <div>
-                                    <p>{{ activity.content }}</p>
-                                    <p class="timeline-desc">{{ activity.description }}</p>
-                                </div>
-                                <div class="timeline-time">{{ activity.timestamp }}</div>
-                            </div>
-                        </el-timeline-item>
-                    </el-timeline>
+                    <v-chart class="chart" :option="dashOpt1" />
                 </el-card>
             </el-col>
-            <el-col :span="10">
-                <el-card shadow="hover" :body-style="{ height: '400px' }">
+            <el-col :span="8">
+                <el-card shadow="hover">
                     <div class="card-header">
-                        <p class="card-header-title">渠道统计</p>
-                        <p class="card-header-desc">最近一个月的订单来源统计</p>
+                        <p class="card-header-title">场景5使用情况</p>
                     </div>
-                    <v-chart class="map-chart" :option="mapOptions" />
+                    <v-chart class="chart" :option="dashOpt1" />
                 </el-card>
             </el-col>
-            <el-col :span="7">
-                <el-card shadow="hover" :body-style="{ height: '400px' }">
+            <el-col :span="8">
+                <el-card shadow="hover">
                     <div class="card-header">
-                        <p class="card-header-title">排行榜</p>
-                        <p class="card-header-desc">销售商品的热门榜单Top5</p>
+                        <p class="card-header-title">场景6使用情况</p>
                     </div>
-                    <div>
-                        <div class="rank-item" v-for="(rank, index) in ranks">
-                            <div class="rank-item-avatar">{{ index + 1 }}</div>
-                            <div class="rank-item-content">
-                                <div class="rank-item-top">
-                                    <div class="rank-item-title">{{ rank.title }}</div>
-                                    <div class="rank-item-desc">销量：{{ rank.value }}</div>
-                                </div>
-                                <el-progress
-                                    :show-text="false"
-                                    striped
-                                    :stroke-width="10"
-                                    :percentage="rank.percent"
-                                    :color="rank.color"
-                                />
-                            </div>
+                    <div style="width: 100%;height: 300px;">
+                        <div style="float: left; width: 100%;display: flex;justify-content: center;align-items: center;margin-bottom: 38px;">
+                            <el-image  :src="url"  style="width: 257px;height: 257px;" fit="contain"/>
+
                         </div>
+                        
+                        <span style="float: left; width: 100%;margin-top: -42px;text-align: center;color: #C0C4CC;font-size: 24px;">
+                            敬请期待
+                        </span>
                     </div>
                 </el-card>
             </el-col>
@@ -127,6 +100,8 @@
 </template>
 
 <script setup lang="ts" name="dashboard">
+import { ref, reactive } from 'vue';
+
 import countup from '@/components/countup.vue';
 import { use, registerMap } from 'echarts/core';
 import { BarChart, LineChart, PieChart, MapChart } from 'echarts/charts';
@@ -141,6 +116,8 @@ import { CanvasRenderer } from 'echarts/renderers';
 import VChart from 'vue-echarts';
 import { dashOpt1, dashOpt2, mapOptions } from './chart/options';
 import chinaMap from '@/utils/china';
+import url from '../assets/img/jingqing.png'
+
 use([
     CanvasRenderer,
     BarChart,
@@ -154,71 +131,15 @@ use([
     MapChart,
 ]);
 registerMap('china', chinaMap);
-const activities = [
-    {
-        content: '收藏商品',
-        description: 'xxx收藏了你的商品，就是不买',
-        timestamp: '30分钟前',
-        color: '#00bcd4',
-    },
-    {
-        content: '用户评价',
-        description: 'xxx给了某某商品一个差评，吐血啊',
-        timestamp: '55分钟前',
-        color: '#1ABC9C',
-    },
-    {
-        content: '订单提交',
-        description: 'xxx提交了订单，快去收钱吧',
-        timestamp: '1小时前',
-        color: '#3f51b5',
-    },
-    {
-        content: '退款申请',
-        description: 'xxx申请了仅退款，又要亏钱了',
-        timestamp: '15小时前',
-        color: '#f44336',
-    },
-    {
-        content: '商品上架',
-        description: '运营专员瞒着你上架了一辆飞机',
-        timestamp: '1天前',
-        color: '#009688',
-    },
-];
+const isStudent = ref(true)
+const hanleTip=(type)=>{
+    if (type=='stu') {
+        isStudent.value = true;
+    } else {
+        isStudent.value = false;
 
-const ranks = [
-    {
-        title: '手机',
-        value: 10000,
-        percent: 80,
-        color: '#f25e43',
-    },
-    {
-        title: '电脑',
-        value: 8000,
-        percent: 70,
-        color: '#00bcd4',
-    },
-    {
-        title: '相机',
-        value: 6000,
-        percent: 60,
-        color: '#64d572',
-    },
-    {
-        title: '衣服',
-        value: 5000,
-        percent: 55,
-        color: '#e9a745',
-    },
-    {
-        title: '书籍',
-        value: 4000,
-        percent: 50,
-        color: '#009688',
-    },
-];
+    }
+}
 </script>
 
 <style>
@@ -227,9 +148,70 @@ const ranks = [
     align-items: center;
     height: 100px;
     padding: 0;
+    background-image: url(../assets/img/studentBg.png);
+    background-position: bottom;
+
 }
+/* .card-body:hover{
+    background-color: #2d8cf0;
+} */
+.card-bodyHover{
+    background-color: #2d8cf0;
+
+}
+.card-bodyHover2{
+    background-color: #40DBDE;
+
+}
+.shadow{
+    box-shadow: -5px 10px 5px #888888;
+
+}
+.card-body2 {
+    display: flex;
+    align-items: center;
+    height: 100px;
+    padding: 0;
+    background-image: url(../assets/img/teachBg.png);
+    background-position: bottom;
+}
+/* .card-body2:hover{
+    background-color:#40DBDE;
+} */
+
 </style>
 <style scoped>
+.studenNumber{
+    font-family: Alimama ShuHeiTi;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 14px;
+    letter-spacing: 0.09em;
+    font-variation-settings: "opsz" auto;
+    font-feature-settings: "kern" on;
+    color: #303649;
+}
+.studenNumber span{
+    font-family: OPPOSans;
+    font-size: 36px;
+    font-weight: bold;
+    line-height: normal;
+    letter-spacing: 0em;
+    font-variation-settings: "opsz" auto;
+    font-feature-settings: "kern" on;
+    color: #107BFF;
+}
+.studenNumber .people{
+    font-family: Alibaba PuHuiTi 3.0;
+    font-size: 24px;
+    font-weight: normal;
+    line-height: 16px;
+    letter-spacing: 0em;
+    font-variation-settings: "opsz" auto;
+    font-feature-settings: "kern" on;
+    color: #8E94A5;
+    margin-left: 5px;
+}
 .card-content {
     flex: 1;
     text-align: center;
@@ -285,7 +267,7 @@ const ranks = [
 
 .chart {
     width: 100%;
-    height: 400px;
+    height: 300px;
 }
 
 .card-header {
