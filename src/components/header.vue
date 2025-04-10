@@ -20,7 +20,7 @@
                         <i class="el-icon-lx-skin"></i>
                     </el-tooltip>
                 </div>
-                <div class="btn-icon" @click="router.push('/ucenter')">
+                <!-- <div class="btn-icon" @click="router.push('/ucenter')">
                     <el-tooltip
                         effect="dark"
                         :content="message ? `有${message}条未读消息` : `消息中心`"
@@ -29,7 +29,7 @@
                         <i class="el-icon-lx-notice"></i>
                     </el-tooltip>
                     <span class="btn-bell-badge" v-if="message"></span>
-                </div>
+                </div> -->
                 <div class="btn-icon" @click="setFullScreen">
                     <el-tooltip effect="dark" content="全屏" placement="bottom">
                         <i class="el-icon-lx-full"></i>
@@ -62,8 +62,10 @@ import { onMounted } from 'vue';
 import { useSidebarStore } from '../store/sidebar';
 import { useRouter } from 'vue-router';
 import imgurl from '../assets/img/img.jpg';
-
-const username: string | null = localStorage.getItem('vuems_name');
+import {loginOut} from '../api/index'
+import request from '../utils/request';
+import { ElMessage,ElMessageBox } from "element-plus";
+const username: string | null = localStorage.getItem('s_name');
 const message: number = 2;
 
 const sidebar = useSidebarStore();
@@ -77,13 +79,47 @@ onMounted(() => {
         collapseChage();
     }
 });
-
+function loginOutFunction() {
+    request.post(loginOut)
+    .then(response => {
+          // 请求成功，处理响应数据
+          console.log('响应数据:', response);
+          const {code,message} = response;
+          if (code == 200) {
+            ElMessage({
+              message: message,
+              type: "success",
+              onClose:function(){
+                localStorage.removeItem('refreshToken');
+        localStorage.removeItem('token');
+        router.push('/login');
+              }
+            });
+          
+          } 
+      })
+    .catch(error => {
+          // 请求失败，处理错误
+          console.log('请求出错:', error.response.data);
+          const { code,message } = error.response.data;
+          if (code==409) {
+            ElMessage({
+              message: message,
+              type: "error",
+            });
+          } else {
+            ElMessage({
+              message: error.response.data,
+              type: "error",
+            });
+          }
+      });  
+}
 // 用户名下拉菜单选择事件
 const router = useRouter();
 const handleCommand = (command: string) => {
     if (command == 'loginout') {
-        localStorage.removeItem('vuems_name');
-        router.push('/login');
+        loginOutFunction()
     } else if (command == 'user') {
         router.push('/ucenter');
     }

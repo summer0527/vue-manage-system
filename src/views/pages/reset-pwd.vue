@@ -2,10 +2,19 @@
     <div class="login-bg">
         <div class="login-container">
             <div class="reset-title">重置密码</div>
-            <p class="reset-text">输入你的邮箱，我们将发送重置密码邮件</p>
+            <!-- <p class="reset-text">输入你的邮箱，我们将发送重置密码邮件</p> -->
             <el-form :model="param" :rules="rules" ref="register" size="large">
                 <el-form-item prop="email">
-                    <el-input v-model="param.email" placeholder="邮箱">
+                    <el-input v-model="param.s_name" placeholder="用户名" >
+                        <template #prepend>
+                            <el-icon>
+                                <User />
+                            </el-icon>
+                        </template>
+                    </el-input>
+                </el-form-item>
+                <el-form-item prop="s_student_id">
+                    <el-input v-model="param.s_student_id" placeholder="学号">
                         <template #prepend>
                             <el-icon>
                                 <Message />
@@ -13,8 +22,17 @@
                         </template>
                     </el-input>
                 </el-form-item>
+                <el-form-item prop="email">
+                    <el-input v-model="param.s_pass" placeholder="新密码">
+                        <template #prepend>
+                            <el-icon>
+                                <Lock />
+                            </el-icon>
+                        </template>
+                    </el-input>
+                </el-form-item>
                 <el-button class="login-btn" type="primary" size="large" @click="submitForm(register)"
-                    >发送邮件</el-button
+                    >保存</el-button
                 >
                 <p class="login-text"><el-link type="primary" @click="$router.push('/login')">返回登录</el-link></p>
             </el-form>
@@ -26,31 +44,118 @@
 import { ref } from 'vue';
 import { ElMessage, type FormInstance, type FormRules } from 'element-plus';
 
+import { passwordResetApi } from "../../api/index";
+import request from "../../utils/request";
 const param = ref({
-    email: '',
+    s_name: '',
+    s_student_id: '',
+    s_pass: ''
 });
-
+const reg2 = /^[a-zA-Z]{6,12}$/;
+const userPassValidate = (rule, value, callback) => {
+  console.log("lllll");
+  if (!value) {
+    return callback(new Error("密码不能为空"));
+  }
+  setTimeout(() => {
+    if (value.toString().length < 6 || value.toString().length > 12) {
+      callback(new Error("密码长度要在6到12位之间"));
+    } else if (!reg2.test(value)) {
+      callback(new Error("请输入英文"));
+    } else {
+      callback();
+    }
+  }, 0);
+};
+const reg = /^[\u4e00-\u9fff]+$/;
+const userUserValidate = (rule, value, callback) => {
+  console.log("lllll");
+  if (!value) {
+    return callback(new Error("用户名不能为空"));
+  }
+  setTimeout(() => {
+    if (value.toString().length > 12) {
+      callback(new Error("用户名最长12位"));
+    } else if (!reg.test(value)) {
+      callback(new Error("请输入中文"));
+    } else {
+      callback();
+    }
+  }, 0);
+};
+const regNumbei = /^\d+$/;
+const userNumberValidate = (rule, value, callback) => {
+  console.log("lllll");
+  if (!value) {
+    return callback(new Error("学号不能为空"));
+  }
+  setTimeout(() => {
+    if (!regNumbei.test(value)) {
+      callback(new Error("请输入数字"));
+    } else {
+      callback();
+    }
+  }, 0);
+};
 const rules: FormRules = {
-    email: [
-        { required: true, message: '请输入邮箱', trigger: 'blur' },
-        {
-            pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-            message: '请输入正确的邮箱格式',
-            trigger: 'blur',
-        },
+    s_name: [
+        { required: true, message: '请输入用户名', trigger: 'blur' },
+        { validator: userUserValidate, trigger: "blur" },
+    ],
+    s_student_id: [
+        { required: true, message: '请输入学号', trigger: 'blur' },
+        { validator: userNumberValidate, trigger: "blur" },
+    ],
+    s_pass: [
+        { required: true, message: '请输入密码', trigger: 'blur' },
+        { validator: userPassValidate, trigger: "blur" },
     ],
 };
 const register = ref<FormInstance>();
+
 const submitForm = (formEl: FormInstance | undefined) => {
-    if (!formEl) return;
-    formEl.validate((valid: boolean) => {
-        if (valid) {
-            ElMessage.success('邮件已发送，请注意查收');
-        } else {
-            return false;
-        }
-    });
+  if (!formEl) return;
+  formEl.validate((valid: boolean) => {
+    if (valid) {
+     
+      request
+        .post(passwordResetApi, param)
+        .then((response) => {
+          // 请求成功，处理响应数据
+          console.log("响应数据:", response);
+          const { code, access_token, refresh_token, s_name, s_id } = response;
+        //   if (code == 201) {
+        //     localStorage.setItem("token", access_token);
+        //     localStorage.setItem("refreshToken", refresh_token);
+        //     localStorage.setItem("s_name", s_name);
+        //     localStorage.setItem("s_id", s_id);
+
+        //     router.push("/dashboard");
+        //   }
+        })
+        .catch((error) => {
+          // 请求失败，处理错误
+          console.log("请求出错:", error);
+          const { code, message } = error.response.data;
+          if (code == 409) {
+            ElMessage({
+              message: message,
+              type: "error",
+            });
+          } else {
+            ElMessage({
+              message: error.response.data,
+              type: "error",
+            });
+          }
+        });
+    } else {
+      ElMessage.error("登录失败");
+      return false;
+    }
+  });
 };
+
 </script>
 
 <style scoped>
@@ -60,7 +165,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
     justify-content: center;
     width: 100%;
     height: 100vh;
-    background: url(../../assets/img/login-bg.jpg) center/cover no-repeat;
+    background: url(../../assets/img/loginbg.png) center/cover no-repeat;
 }
 
 .reset-title {

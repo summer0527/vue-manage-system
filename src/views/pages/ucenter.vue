@@ -6,17 +6,17 @@
                 <div class="user-avatar-wrap">
                     <el-upload
     class="avatar-uploader"
-    action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
     :show-file-list="false"
     :on-success="handleAvatarSuccess"
     :before-upload="beforeAvatarUpload"
+    :http-request="customUpload"
   >
     <img v-if="imageUrl" :src="imageUrl" class="avatar" />
     <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
   </el-upload>
                    
                 </div>
-                <div class="user-info">
+                <div class="user-info" style="margin-top: 40px;">
                     <div class="info-name">{{ name }}</div>
                     
                    
@@ -24,67 +24,26 @@
                 <div style="padding: 10px;box-sizing: border-box;height: 300px;">
                     <el-form   label-width="auto">
                     <el-form-item label="用户名：">
-                                <el-input  v-model="form.old"></el-input>
+                                <el-input  v-model="form.s_name" readonly></el-input>
                             </el-form-item>
                             <el-form-item label="旧密码：">
-                                <el-input type="password" v-model="form.old"></el-input>
+                                <el-input type="password" v-model="form.s_pass2"></el-input>
                             </el-form-item>
                             <el-form-item label="新密码：">
-                                <el-input type="password" v-model="form.new"></el-input>
+                                <el-input type="password" v-model="form.s_pass" ></el-input>
                             </el-form-item>
                           
                             
                         </el-form>
                         <div style="display: flex;justify-content: center;align-items: center;">
                             <el-button type="primary" @click="onSubmit">保存</el-button>
+                            <el-button  @click="handleBack">返回首页</el-button>
+
                         </div>
                 </div>
                 
             </el-card>
-            <!-- <el-card
-                class="user-content"
-                shadow="hover"
-                :body-style="{ padding: '20px 50px', height: '100%', boxSizing: 'border-box' }"
-            >
-                <el-tabs tab-position="left" v-model="activeName">
-                   
-                    <el-tab-pane name="label2" label="我的头像" class="user-tabpane">
-                        <div class="crop-wrap" v-if="activeName === 'label2'">
-                            <vueCropper
-                                ref="cropper"
-                                :img="imgSrc"
-                                :autoCrop="true"
-                                :centerBox="true"
-                                :full="true"
-                                mode="contain"
-                            >
-                            </vueCropper>
-                        </div>
-                        <el-button class="crop-demo-btn" type="primary"
-                            >选择图片
-                            <input class="crop-input" type="file" name="image" accept="image/*" @change="setImage" />
-                        </el-button>
-                        <el-button type="success" @click="saveAvatar">上传并保存</el-button>
-                    </el-tab-pane>
-                    <el-tab-pane name="label3" label="修改密码" class="user-tabpane">
-                        <el-form class="w500" label-position="top">
-                            <el-form-item label="旧密码：">
-                                <el-input type="password" v-model="form.old"></el-input>
-                            </el-form-item>
-                            <el-form-item label="新密码：">
-                                <el-input type="password" v-model="form.new"></el-input>
-                            </el-form-item>
-                            <el-form-item label="确认新密码：">
-                                <el-input type="password" v-model="form.new1"></el-input>
-                            </el-form-item>
-                            <el-form-item>
-                                <el-button type="primary" @click="onSubmit">保存</el-button>
-                            </el-form-item>
-                        </el-form>
-                    </el-tab-pane>
-                   
-                </el-tabs>
-            </el-card> -->
+           
         </div>
     </div>
 </template>
@@ -96,13 +55,53 @@ import { ElMessage } from 'element-plus'
 import 'vue-cropper/dist/index.css';
 import avatar from '@/assets/img/img.jpg';
 import type { UploadProps } from 'element-plus'
-const name = localStorage.getItem('vuems_name');
+import { userMessageApi,userMessageUpdateApi,userPicTApi} from "../../api/index";
+import request from "../../utils/request";
+import { useRouter } from "vue-router";
+const router = useRouter();
+
+const name = localStorage.getItem('s_name');
+const s_id = localStorage.getItem('s_id');
 const form = reactive({
-    new1: '',
-    new: '',
+    s_name: name,
+    s_pass: '',
+    s_pass2:'',
     old: '',
 });
-const onSubmit = () => {};
+
+const onSubmit = async() => {
+   
+    await request
+    .put(userMessageUpdateApi+s_id,form)
+    .then((response) => {
+      console.log("响应数据:", response);
+      const {
+        message,
+        code,
+      } = response;
+      if (code == 200) {
+        ElMessage({
+          message: message,
+          type: "success",
+        });
+      }
+    })
+    .catch((error) => {
+      console.log("请求出错:", error);
+      const { message, code } = error.response.data;
+      if (code == 409) {
+        ElMessage({
+          message: message,
+          type: "error",
+        });
+      } else {
+        ElMessage({
+          message: error.response.data,
+          type: "error",
+        });
+      }
+    });
+};
 
 const activeName = ref('label2');
 
@@ -111,7 +110,71 @@ const imgSrc = ref(avatar);
 const cropImg = ref('');
 const cropper: any = ref();
 const imageUrl = ref(avatar)
+// 自定义上传方法
+const customUpload = async (params) => {
+  const formData = new FormData();
+  formData.append('file', params.file);
 
+  
+
+  await request
+    .put(userPicTApi+s_id, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    .then((response) => {
+      console.log("响应数据:", response);
+      imageUrl.value = params.file;
+      ElMessage.success('头像上传成功');
+    })
+    .catch((error) => {
+      console.log("请求出错:", error);
+      const { message, code } = error.response.data;
+      if (code == 409) {
+        ElMessage({
+          message: message,
+          type: "error",
+        });
+      } else {
+        ElMessage({
+          message: error.response.data,
+          type: "error",
+        });
+      }
+    });
+}
+const getData = async () => {
+  await request
+    .get(userMessageApi+s_id)
+    .then((response) => {
+      console.log("响应数据:", response);
+      const {
+        message,
+        data:{s_name,p_pic},
+        code,
+      } = response;
+      if (code == 200) {
+        imageUrl.value='http://192.168.1.4:1818/'+p_pic.replace(/\\/g, '/')
+      }
+    })
+    .catch((error) => {
+      console.log("请求出错:", error);
+      const { message, code } = error.response.data;
+      if (code == 409) {
+        ElMessage({
+          message: message,
+          type: "error",
+        });
+      } else {
+        ElMessage({
+          message: error.response.data,
+          type: "error",
+        });
+      }
+    });
+};
+getData()
 const handleAvatarSuccess: UploadProps['onSuccess'] = (
   response,
   uploadFile
@@ -121,10 +184,7 @@ const handleAvatarSuccess: UploadProps['onSuccess'] = (
 }
 
 const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
-  if (rawFile.type !== 'image/jpeg') {
-    ElMessage.error('Avatar picture must be JPG format!')
-    return false
-  } else if (rawFile.size / 1024 / 1024 > 2) {
+    if (rawFile.size / 1024 / 1024 > 2) {
     ElMessage.error('Avatar picture size can not exceed 2MB!')
     return false
   }
@@ -150,6 +210,9 @@ const cropImage = () => {
 const saveAvatar = () => {
     avatarImg.value = cropImg.value;
 };
+const handleBack=()=>{
+    router.push("/dashboard");
+}
 </script>
 
 <style scoped>

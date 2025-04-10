@@ -10,7 +10,17 @@ export interface User {
 }
 
 export interface Register {
-    username: string;
-    password: string;
-    email: string;
+    s_name: string;
+    s_pass: string;
 }
+export interface DialogueData {
+    conversation_id: string;
+    created_at: string;
+    inputs: object;
+    introduction: string;
+    is_deleted: boolean;
+    names: string;
+    s_id?: number;
+    updated_at: string;
+    users:string;
+  }

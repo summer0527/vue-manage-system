@@ -15,12 +15,12 @@
 					:value-format="item.format" :placeholder="item.placeholder"></el-date-picker>
 			</el-form-item>
 			<el-form-item>
-				<el-button type="primary" :icon="Search" @click="search">查询</el-button>
-				<el-button :icon="Refresh" @click="resetForm(searchRef)">重置</el-button>
+				<el-button type="primary" :icon="Search" @click="search" v-show="isquery">查询</el-button>
+				<el-button :icon="Refresh" @click="resetForm(searchRef)" v-show="isquery">重置</el-button>
 				<el-button :icon="Refresh" @click="handleAdd" v-show="isAdd">新增</el-button>
 
 				<el-button :icon="Refresh" @click="handleExport(searchRef)" v-show="isExport">导出</el-button>
-				<el-button :icon="Refresh" @click="handleToggle(searchRef)" v-show="isToggle">停用/启用</el-button>
+				<el-button :icon="Refresh" @click="handleToggle(searchRef)" v-show="isToggle">删除</el-button>
 
 
 			</el-form-item>
@@ -44,6 +44,10 @@ const props = defineProps({
 		type: Boolean,
 		required: true
 	},
+	isquery:{
+		type: Boolean,
+		required: true
+	},
 	isToggle: {
 		type: Boolean,
 		required: true
@@ -63,6 +67,14 @@ const props = defineProps({
 	search: {
 		type: Function,
 		default: () => { }
+	},
+	toggle:{
+		type: Function,
+		default: () => { }
+	},
+	export:{
+		type: Function,
+		default: () => { }
 	}
 });
 console.log(props.isExport,'isExport')
@@ -73,16 +85,13 @@ const resetForm = (formEl: FormInstance | undefined) => {
 	props.search();
 }
 const handleExport=(formEl: FormInstance | undefined)=>{
-	if (!formEl) return
-	formEl.resetFields()
-	props.search();
+	props.export();
 
 }
 import { defineEmits } from 'vue';
 
 const emit = defineEmits(['toggleAdd']);
 const handleAdd=()=>{
-	console.log('hahahahahhahah')
 	emit('toggleAdd', true);
 }
 const handleToggle=(formEl: FormInstance | undefined)=>{
@@ -92,6 +101,9 @@ const handleToggle=(formEl: FormInstance | undefined)=>{
               message: '请至少选择一条数据',
               type: "error",
             });
+	} else {
+		props.toggle();
+
 	}
 
 }

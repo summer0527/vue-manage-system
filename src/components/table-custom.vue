@@ -40,7 +40,7 @@
             <el-table-column type="selection" width="55" v-if="isSelection" align="center"/>
 
             <template v-for="item in columns" :key="item.prop">
-                <el-table-column v-if="item.visible" :prop="item.prop" :label="item.label" :width="item.width"
+                <el-table-column show-overflow-tooltip v-if="item.visible" :prop="item.prop" :label="item.label" :width="item.width"
                     :type="item.type" :align="item.align || 'center'">
                     
                    
@@ -167,13 +167,12 @@ columns.value.forEach((item) => {
         item.visible = true
     }
 })
-
 // 当选择项发生变化时会触发该事件
 const multipleSelection = ref([])
 
 import { defineEmits } from 'vue';
 
-const emit = defineEmits(['sendMessage','cellData']);
+const emit = defineEmits(['sendMessage','cellData','changePage']);
 
 const handleSelectionChange = (selection: any[]) => {
     multipleSelection.value = selection
@@ -193,7 +192,9 @@ const handleClickCell=(row, column, cell, event)=>{
 }
 // 当前页码变化的事件
 const handleCurrentChange = (val: number) => {
-    props.changePage(val)
+    console.log(val,'ioioioioio')
+    // props.changePage(val)
+    emit('changePage', val);
 }
 
 const handleDelete = (row) => {

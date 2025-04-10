@@ -100,7 +100,7 @@
 </template>
 
 <script setup lang="ts" name="dashboard">
-import { ref, reactive } from 'vue';
+import { ref, reactive,onMounted } from 'vue';
 
 import countup from '@/components/countup.vue';
 import { use, registerMap } from 'echarts/core';
@@ -117,6 +117,10 @@ import VChart from 'vue-echarts';
 import { dashOpt1, dashOpt2, mapOptions } from './chart/options';
 import chinaMap from '@/utils/china';
 import url from '../assets/img/jingqing.png'
+import { loginUserApi } from "../api/index";
+import request from "../utils/request";
+import { useRouter } from "vue-router";
+const router = useRouter();
 
 use([
     CanvasRenderer,
@@ -139,6 +143,41 @@ const hanleTip=(type)=>{
         isStudent.value = false;
 
     }
+}
+onMounted(() => {
+  getUser();
+  
+});
+function getUser() {
+  console.log(router, "routerrouterrouterrouterrouter");
+  request
+    .get(loginUserApi)
+    .then((response) => {
+      console.log("响应数据:", response);
+      const { code } = response;
+      if (code == 200) {
+        localStorage.setItem("userData", response);
+      }
+    })
+    .catch((error) => {
+      console.log("请求出错:", error);
+      if (error == "未登录，请先登录") {
+        console.log(router, "routerrouterrouterrouterrouter");
+        router.push("/login");
+      }
+      const { code, message } = error.response.data;
+      if (code == 409) {
+        ElMessage({
+          message: message,
+          type: "error",
+        });
+      } else {
+        ElMessage({
+          message: error.response.data,
+          type: "error",
+        });
+      }
+    });
 }
 </script>
 

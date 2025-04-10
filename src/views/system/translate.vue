@@ -47,7 +47,7 @@ import { fetchUserData } from '@/api';
 import TableCustom from '@/components/table-custom.vue';
 import TableSearch from '@/components/table-search.vue';
 import { FormOption, FormOptionList } from '@/types/form-option';
-import { dialogueApi} from "../../api/index";
+import { languageApi} from "../../api/index";
 import request from "../../utils/request";
 
 
@@ -95,7 +95,7 @@ const pageList = reactive({
 const tableData = ref<DialogueData[]>([]);
 const getData = async () => {
     await request
-    .get(dialogueApi, { params: pageList })
+    .get(languageApi, { params: pageList })
     .then((response) => {
       console.log("响应数据:", response);
       const {

@@ -30,7 +30,7 @@ export const menuData: Menus[] = [
     },
     {
         id: '2',
-        title: '学科管理',
+        title: '学校管理',
         index: '2-1',
         icon: 'Calendar',
         children: [
@@ -38,7 +38,7 @@ export const menuData: Menus[] = [
                 id: '21',
                 pid: '3',
                 index: '/system-compus',
-                title: '校区管理',
+                title: '学校管理',
             },
             {
                 id: '22',
@@ -66,7 +66,13 @@ export const menuData: Menus[] = [
                 id: '31',
                 pid: '3',
                 index: '/system-dialogue',
-                title: '对话管理',
+                title: '对话记忆列表',
+            },
+            {
+                id: '32',
+                pid: '3',
+                index: '/system-translate',
+                title: '翻译列表',
             }
         ],
     },

@@ -16,6 +16,35 @@ export default defineConfig({
 			resolvers: [ElementPlusResolver()]
 		})
 	],
+	server:{
+		host: '0.0.0.0',
+		proxy: {
+			'/Amanager': {
+				target: 'http://192.168.1.6:1818',
+				changeOrigin: true,
+		
+			},
+			'/personal_center': {
+				target: 'http://192.168.1.6:1818',
+				changeOrigin: true,
+		
+			},
+			'/login':{
+				target: 'http://192.168.1.6:1818',
+				changeOrigin: true,
+			},
+			'/dialogue':{
+				target: 'http://192.168.1.6:1818',
+				changeOrigin: true,
+			},
+			'/language':{
+				target: 'http://192.168.1.6:1818',
+				changeOrigin: true,
+			}
+			
+
+		}
+	},
 	optimizeDeps: {
 		include: ['schart.js']
 	},
