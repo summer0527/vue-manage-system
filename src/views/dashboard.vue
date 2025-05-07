@@ -1,11 +1,9 @@
 <template>
     <div>
-        <el-row :gutter="20" class="mgb20" >
+        <!-- <el-row :gutter="20" class="mgb20" >
             <el-col :span="12" @click="hanleTip('stu')">
                 <el-card shadow="hover"  :body-class="isStudent?'card-body card-bodyHover':'card-body'" :class="isStudent?'shadow':''">
-                    <!-- <el-icon class="card-icon bg1">
-                        <User />
-                    </el-icon> -->
+                 
                     <div class="card-content">
                         <div class="studenNumber">学生数量
                         <countup class="card-num color1" :end="6666" />
@@ -17,9 +15,7 @@
             </el-col>
             <el-col :span="12" @click="hanleTip('te')">
                 <el-card shadow="hover" :body-class="!isStudent?'card-body2 card-bodyHover2':'card-body2'" :class="!isStudent?'shadow':''">
-                    <!-- <el-icon class="card-icon bg2">
-                        <ChatDotRound />
-                    </el-icon> -->
+                  
                     <div class="card-content">
                         <div class="studenNumber">教师数量
                             <countup class="card-num color2" :end="168" />
@@ -32,56 +28,187 @@
                 </el-card>
             </el-col>
           
-        </el-row>
+        </el-row> -->
 
         <el-row :gutter="20" class="mgb20">
             <el-col :span="8">
                 <el-card shadow="hover">
                     <div class="card-header">
-                        <p class="card-header-title">场景1使用情况</p>
+                        <p class="card-header-title">教案生成助手</p>
                         <!-- <p class="card-header-desc">最近一周订单状态，包括订单成交量和订单退货量</p> -->
                     </div>
-                    <v-chart class="chart" :option="dashOpt1" />
+                    <v-chart class="chart" :option="dashOpt13" />
                 </el-card>
             </el-col>
             <el-col :span="8">
                 <el-card shadow="hover">
                     <div class="card-header">
-                        <p class="card-header-title">场景2使用情况</p>
+                        <p class="card-header-title">辩论主持人助手</p>
                     </div>
-                    <v-chart class="chart" :option="dashOpt1" />
+                    <v-chart class="chart" :option="dashOpt11" />
                 </el-card>
             </el-col>
             <el-col :span="8">
                 <el-card shadow="hover">
                     <div class="card-header">
-                        <p class="card-header-title">场景3使用情况</p>
+                        <p class="card-header-title">分层练习题助手</p>
+                    </div>
+                    <v-chart class="chart" :option="dashOpt7" />
+                </el-card>
+            </el-col>
+        </el-row>
+        <el-row :gutter="20" class="mgb20">
+            
+        </el-row>
+        <el-row :gutter="20" class="mgb20">
+            <el-col :span="8">
+                <el-card shadow="hover">
+                    <div class="card-header">
+                        <p class="card-header-title">教学大纲生成助手</p>
+                    </div>
+                    <v-chart class="chart" :option="dashOpt9" />
+                </el-card>
+            </el-col>
+            <el-col :span="8">
+                <el-card shadow="hover">
+                    <div class="card-header">
+                        <p class="card-header-title">课堂互动问答助手</p>
+                    </div>
+                    <v-chart class="chart" :option="dashOpt15" />
+                </el-card>
+            </el-col>
+            <el-col :span="8">
+                <el-card shadow="hover">
+                    <div class="card-header">
+                        <p class="card-header-title">虚拟合作伙伴助手</p>
                     </div>
                     <v-chart class="chart" :option="dashOpt1" />
                 </el-card>
             </el-col>
         </el-row>
-        <el-row :gutter="20">
+        <el-row :gutter="20" class="mgb20">
             <el-col :span="8">
                 <el-card shadow="hover">
                     <div class="card-header">
-                        <p class="card-header-title">场景4使用情况</p>
+                        <p class="card-header-title">翻译助手</p>
                     </div>
-                    <v-chart class="chart" :option="dashOpt1" />
+                    <v-chart class="chart" :option="dashOpt17" />
                 </el-card>
             </el-col>
             <el-col :span="8">
                 <el-card shadow="hover">
                     <div class="card-header">
-                        <p class="card-header-title">场景5使用情况</p>
+                        <p class="card-header-title">代码生成助手</p>
                     </div>
-                    <v-chart class="chart" :option="dashOpt1" />
+                    <v-chart class="chart" :option="dashOpt16" />
                 </el-card>
             </el-col>
             <el-col :span="8">
                 <el-card shadow="hover">
                     <div class="card-header">
-                        <p class="card-header-title">场景6使用情况</p>
+                        <p class="card-header-title">研发问答助手</p>
+                    </div>
+                    <v-chart class="chart" :option="dashOpt5" />
+                </el-card>
+            </el-col>
+        </el-row>
+        <el-row :gutter="20" class="mgb20">
+            <el-col :span="8">
+                <el-card shadow="hover">
+                    <div class="card-header">
+                        <p class="card-header-title">对话记忆助手</p>
+                    </div>
+                    <v-chart class="chart" :option="dashOpt18" />
+                </el-card>
+            </el-col>
+            <el-col :span="8">
+                <el-card shadow="hover">
+                    <div class="card-header">
+                        <p class="card-header-title">个性化学习助手</p>
+                    </div>
+                    <v-chart class="chart" :option="dashOpt6" />
+                </el-card>
+            </el-col>
+            <el-col :span="8">
+                <el-card shadow="hover">
+                    <div class="card-header">
+                        <p class="card-header-title">数据表字段生成助手</p>
+                    </div>
+                    <v-chart class="chart" :option="dashOpt10" />
+                </el-card>
+            </el-col>
+        </el-row>
+        <el-row :gutter="20" class="mgb20">
+            <el-col :span="8">
+                <el-card shadow="hover">
+                    <div class="card-header">
+                        <p class="card-header-title">体检助手</p>
+                    </div>
+                    <v-chart class="chart" :option="dashOpt12" />
+                </el-card>
+            </el-col>
+            <el-col :span="8">
+                <el-card shadow="hover">
+                    <div class="card-header">
+                        <p class="card-header-title">智能客服助手</p>
+                    </div>
+                    <v-chart class="chart" :option="dashOpt14" />
+                </el-card>
+            </el-col>
+            <el-col :span="8">
+                <el-card shadow="hover">
+                    <div class="card-header">
+                        <p class="card-header-title">行业知识库助手</p>
+                    </div>
+                    <v-chart class="chart" :option="dashOpt8" />
+                </el-card>
+            </el-col>
+        </el-row>
+        <el-row :gutter="20" class="mgb20">
+            <el-col :span="8">
+                <el-card shadow="hover">
+                    <div class="card-header">
+                        <p class="card-header-title">心理健康支持助手</p>
+                    </div>
+                    <v-chart class="chart" :option="dashOpt4" />
+                </el-card>
+            </el-col>
+            <el-col :span="8">
+                <el-card shadow="hover">
+                    <div class="card-header">
+                        <p class="card-header-title">汽车故障检修助手</p>
+                    </div>
+                    <v-chart class="chart" :option="dashOpt2" />
+                </el-card>
+            </el-col>
+            <el-col :span="8">
+                <el-card shadow="hover">
+                    <div class="card-header">
+                        <p class="card-header-title">治疗虚拟教学培训助手</p>
+                    </div>
+                    <v-chart class="chart" :option="dashOpt3" />
+                </el-card>
+            </el-col>
+        </el-row>
+        <el-row :gutter="20" class="mgb20">
+            
+          
+           
+           
+           
+            <el-col :span="8">
+                <el-card shadow="hover">
+                    <div class="card-header">
+                        <p class="card-header-title">智能导诊与患者服务助手</p>
+                    </div>
+                    <v-chart class="chart" :option="dashOpt19" />
+                </el-card>
+            </el-col>
+           
+            <el-col :span="8">
+                <el-card shadow="hover">
+                    <div class="card-header">
+                        <p class="card-header-title">新场景</p>
                     </div>
                     <div style="width: 100%;height: 300px;">
                         <div style="float: left; width: 100%;display: flex;justify-content: center;align-items: center;margin-bottom: 38px;">
@@ -111,15 +238,18 @@ import {
     LegendComponent,
     TitleComponent,
     VisualMapComponent,
+    
 } from 'echarts/components';
 import { CanvasRenderer } from 'echarts/renderers';
 import VChart from 'vue-echarts';
-import { dashOpt1, dashOpt2, mapOptions } from './chart/options';
+import { dashOpt1, dashOpt2, dashOpt3,dashOpt4,dashOpt5,dashOpt6,dashOpt7,dashOpt8,dashOpt9,dashOpt10,dashOpt11,dashOpt12,dashOpt13,dashOpt14,dashOpt15,dashOpt16,dashOpt17,dashOpt18,dashOpt19 } from './chart/options';
 import chinaMap from '@/utils/china';
 import url from '../assets/img/jingqing.png'
-import { loginUserApi } from "../api/index";
+import { loginUserApi,virtuallearningDailyApi } from "../api/index";
 import request from "../utils/request";
 import { useRouter } from "vue-router";
+import { ElMessage } from 'element-plus';
+
 const router = useRouter();
 
 use([
@@ -146,8 +276,38 @@ const hanleTip=(type)=>{
 }
 onMounted(() => {
   getUser();
+  getCheckData()
   
 });
+function getCheckData(){
+    console.log('popopopopoe')
+    request
+    .get(virtuallearningDailyApi,{params:{days:'7'}})
+    .then((response) => {
+      console.log("响应数据:", response);
+      const { code } = response;
+      if (code == 200) {
+        localStorage.setItem("userData", response);
+      }
+    })
+    .catch((error) => {
+      console.log("请求出错:", error);
+      if (error == "未登录，请先登录") {
+      }
+      const { code, message } = error.response.data;
+      if (code == 409) {
+        ElMessage({
+          message: message,
+          type: "error",
+        });
+      } else {
+        ElMessage({
+          message: error.response.data,
+          type: "error",
+        });
+      }
+    });
+}
 function getUser() {
   console.log(router, "routerrouterrouterrouterrouter");
   request

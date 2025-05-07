@@ -96,13 +96,29 @@ const handleAdd=()=>{
 }
 const handleToggle=(formEl: FormInstance | undefined)=>{
 	console.log(props.selectData,'===================================')
+
 	if (props.selectData.length==0){
 		ElMessage({
               message: '请至少选择一条数据',
               type: "error",
             });
 	} else {
-		props.toggle();
+		let fl = true
+		props.selectData.forEach((ele)=>{
+			console.log(ele,'eeeee')
+			if (ele.is_deleted=='停用'){
+				fl=false
+			}
+		})
+		if (fl) {
+			props.toggle();
+
+		} else {
+			ElMessage({
+              message: '所选数据存在已经停用数据',
+              type: "error",
+            });	
+		}
 
 	}
 

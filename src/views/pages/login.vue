@@ -6,16 +6,20 @@
         src="../../assets/img/loginbg.png"
       />
     </div>
-    <div class="login-container">
+    <div class="login-container" style='display: flex
+;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;'>
       <div class="login-header">
         <img class="logo mr10" src="../../assets/img/logoimg.png" alt="" />
-        <div class="login-title">吉斗云AI</div>
+        <div class="login-title">吉斗云AI - 教育专业大模型AI场景提供商</div>
       </div>
-      <p style="width: 100%; height: 60px; font-size: 24px; text-align: center">
-        AI场景校园风向标
+      <p style="width: 100%; height: 60px; font-size: 16px; text-align: center;color:#888585">
+        虹晷测万象之渊，启钥在方寸；龙文演八纮之变，成章于无形
       </p>
 
-      <el-form :model="param" :rules="rules" ref="login" size="large">
+      <el-form :model="param" :rules="rules" ref="login" size="large" style='width:75%'>
         <el-form-item prop="username">
           <el-input v-model="param.username" placeholder="用户名">
             <template #prepend>
@@ -26,7 +30,7 @@
           </el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input type="password" placeholder="密码" v-model="param.password">
+          <el-input type="password" placeholder="密码" v-model="param.password" @keydown.enter="submitForm(login)">
             <template #prepend>
               <el-icon>
                 <Lock />
@@ -57,7 +61,13 @@
           >
         </p>
       </el-form>
+    
+
     </div>
+    <p style="position: fixed;
+    bottom: 2%;
+    z-index: 10000000;
+    color: #ffffff;">吉林省吉斗云科技有限公司版权所有  Copyright © JiDouYun.com, All Rights Reserved.</p>
   </div>
 </template>
 

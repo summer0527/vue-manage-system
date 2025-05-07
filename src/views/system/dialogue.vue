@@ -82,8 +82,12 @@ let columns = ref([
 
     { prop: 'names', label: '用户输入内容' },
     { prop: 'introduction', label: 'AI响应内容' },
-    { prop: 'type', label: '消息类型' },
+    { prop: 'created_at', label: '创建时间' },
+
+    // { prop: 'type', label: '消息类型' },
     { prop: 'conversation_id', label: '上下文ID' },
+    { prop: 'is_deleted', label: '是否删除' },
+
 
 ])
 
@@ -93,6 +97,18 @@ const pageList = reactive({
   total: 0,
 })
 const tableData = ref<DialogueData[]>([]);
+    const extractDateFormat = (date) => {
+  const now = new Date(date);
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  const hour = String(now.getHours()).padStart(2, "0");
+  const minute = String(now.getMinutes()).padStart(2, "0");
+  const second = String(now.getSeconds()).padStart(2, "0");
+
+  const formattedDate = `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+  return formattedDate;
+};
 const getData = async () => {
     await request
     .get(dialogueApi, { params: pageList })
@@ -104,11 +120,24 @@ const getData = async () => {
         code,
       } = response;
       if (code == 200) {
-        items.forEach(ele=>{
-            if (ele.inputs.type){
-                ele.type=ele.inputs.type
-            }
-        })
+        // items.forEach(ele=>{
+        //     if (ele.inputs.type){
+        //         ele.type=ele.inputs.type
+        //     }
+        // })
+        items.forEach((element) => {
+          if (element.created_at) {
+            element.created_at = extractDateFormat(element.created_at);
+          }
+          if(element.is_deleted=='1') {
+            element.is_deleted = '是';
+
+          } else {
+            element.is_deleted = '否';
+
+          }
+          //  element.is_deleted = element.is_deleted?'停用':'启用'
+        });
         tableData.value = items;
         pageList.total = total;
       }

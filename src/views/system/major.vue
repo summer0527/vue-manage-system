@@ -101,7 +101,11 @@ const handleSearch = () => {
 // 表格相关
 let columns = ref([
     { type: 'index', label: '序号', width: 55, align: 'center' },
-    { prop: 's_portrait_role', label: '专业名称' },
+    { prop: 's_speciality', label: '专业名称' },
+    { prop: 'paths', label: '路径' },
+    { prop: 'paths_name', label: '路径名称' },
+
+    
     { prop: 'created_at', label: '创建时间' },
    
 
@@ -183,6 +187,10 @@ let options = ref<FormOption>({
     span: 24,
     list: [
         { type: 'input', label: '专业名称', prop: 's_speciality', required: true },
+        { type: 'input', label: '路径', prop: 'paths', required: true },
+        { type: 'input', label: '路径名称', prop: 'paths_name', required: true },
+
+
       
        
     ]

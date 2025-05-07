@@ -3,13 +3,20 @@
         <div style="width: 70%;height: 100%;float: left;">
             <img style="width: 100%; height: 100%;object-fit: cover;" src="../../assets/img/loginbg.png"  />
         </div>
-        <div class="login-container">
+        <div class="login-container" style='display: flex
+;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;'>
             <div class="login-header">
                 <img class="logo mr10" src="../../assets/img/logoimg.png" alt="" />
-                <div class="login-title">吉斗云AI</div>
+                <div class="login-title">吉斗云AI - 教育专业大模型AI场景提供商</div>
             </div>
-            <p style="width: 100%;height: 60px;font-size: 24px;text-align: center;">AI场景校园风向标</p>
-            <el-form :model="param" :rules="rules" ref="register" size="large">
+            <!-- <p style="width: 100%;height: 60px;font-size: 24px;text-align: center;">AI场景校园风向标</p> -->
+            <p style="width: 100%; height: 60px; font-size: 16px; text-align: center;color:#888585">
+        虹晷测万象之渊，启钥在方寸；龙文演八纮之变，成章于无形
+      </p>
+            <el-form :model="param" :rules="rules" ref="register" size="large" style='width:75%'>
                 <el-form-item prop="s_name">
                     <el-input v-model="param.s_name" placeholder="用户名">
                         <template #prepend>
@@ -25,7 +32,7 @@
                         type="password"
                         placeholder="密码"
                         v-model="param.s_pass"
-                       
+                       @keydown.enter="submitForm(register)"
                     >
                         <template #prepend>
                             <el-icon>
@@ -40,15 +47,19 @@
                 </p>
             </el-form>
         </div>
+        <p style="position: fixed;
+    bottom: 2%;
+    z-index: 10000000;
+    color: #ffffff;">吉林省吉斗云科技有限公司版权所有  Copyright © JiDouYun.com, All Rights Reserved.</p>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue';
+import { ref, reactive,onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { ElMessage, type FormInstance, type FormRules } from 'element-plus';
 import { Register } from '@/types/user';
-import { registerApi } from "../../api/index";
+import { registerApi,specialitiesApi } from "../../api/index";
 import request from "../../utils/request";
 const router = useRouter();
 const param = reactive<Register>({
@@ -103,6 +114,39 @@ const rules: FormRules = {
 
     ],
 };
+onMounted(()=>{
+  console.log('ceshishi1')
+  getSelectData()
+})
+function getSelectData(){
+  request
+      .get(specialitiesApi)
+      .then((response) => {
+        console.log("响应数据:", response);
+        const { code } = response;
+        if (code == 200) {
+        }
+      })
+      .catch((error) => {
+        console.log("请求出错:", error);
+        if (error == "未登录，请先登录") {
+          console.log(router, "routerrouterrouterrouterrouter");
+          router.push("/login");
+        }
+        const { code, message } = error.response.data;
+        if (code == 409) {
+          ElMessage({
+            message: message,
+            type: "error",
+          });
+        } else {
+          ElMessage({
+            message: error.response.data,
+            type: "error",
+          });
+        }
+      });
+}
 const config = {
   headers: {
     "Content-Type": "application/json", // 设置请求头为 JSON 格式

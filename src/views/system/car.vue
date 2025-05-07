@@ -47,9 +47,8 @@ import { fetchUserData } from '@/api';
 import TableCustom from '@/components/table-custom.vue';
 import TableSearch from '@/components/table-search.vue';
 import { FormOption, FormOptionList } from '@/types/form-option';
-import { languageApi} from "../../api/index";
+import { carApi} from "../../api/index";
 import request from "../../utils/request";
-
 
 const activeNames = ref(['1'])
 const isSelection = ref(true)
@@ -78,6 +77,7 @@ const handleSearch = () => {
 // 表格相关
 let columns = ref([
     { type: 'index', label: '序号', width: 55, align: 'center' },
+
     { prop: 'users', label: '用户名' },
 
     { prop: 'names', label: '用户输入内容' },
@@ -85,8 +85,10 @@ let columns = ref([
     { prop: 'created_at', label: '创建时间' },
 
     // { prop: 'type', label: '消息类型' },
+    
     { prop: 'conversation_id', label: '上下文ID' },
     { prop: 'is_deleted', label: '是否删除' },
+
 
 ])
 
@@ -110,7 +112,7 @@ const tableData = ref<DialogueData[]>([]);
 };
 const getData = async () => {
     await request
-    .get(languageApi, { params: pageList })
+    .get(carApi, { params: pageList })
     .then((response) => {
       console.log("响应数据:", response);
       const {
@@ -119,11 +121,6 @@ const getData = async () => {
         code,
       } = response;
       if (code == 200) {
-        // items.forEach(ele=>{
-        //     if (ele.inputs.type){
-        //         ele.type=ele.inputs.type
-        //     }
-        // })
         items.forEach((element) => {
           if (element.created_at) {
             element.created_at = extractDateFormat(element.created_at);

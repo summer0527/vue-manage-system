@@ -11,10 +11,12 @@ service.interceptors.request.use(
         const isLoginPage = config.url.includes('/Amanager/token');
 
         const isRegisterPage = config.url.includes('/Amanager/register');
+        const isspeciality= config.url.includes('/specialityss/specialities');
 
 
 
-        if (!isLoginPage&&!isRegisterPage&& token==null) {
+
+        if (!isLoginPage&&!isRegisterPage&&!isspeciality&& token==null) {
             console.log('====================')
             // router.push('/login');
             return Promise.reject(new Error('未登录，请先登录'));
@@ -48,7 +50,7 @@ service.interceptors.response.use(
                   "Authorization":`Bearer ${token}`
                 },
               };
-            const { data } = await axios.post('/Amanager/refresh', { refresh_token:refreshToken},configt);  
+            const { data } = await axios.post('/api/Amanager/refresh', { refresh_token:refreshToken},configt);  
             console.log(data,'data')
             localStorage.setItem("token", data.access_token);
             localStorage.setItem("refreshToken", data.refresh_token);

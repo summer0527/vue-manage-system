@@ -19,12 +19,12 @@ export const menuData: Menus[] = [
                 index: '/system-user',
                 title: '用户管理',
             },
-            {
-                id: '12',
-                pid: '1',
-                index: '/system-role',
-                title: '用户画像管理',
-            }
+            // {
+            //     id: '12',
+            //     pid: '1',
+            //     index: '/system-role',
+            //     title: '用户画像管理',
+            // }
             
         ],
     },
@@ -56,27 +56,136 @@ export const menuData: Menus[] = [
            
         ],
     },
-    {
-        id: '3',
-        title: '对话管理',
-        index: '3',
-        icon: 'Calendar',
-        children: [
-            {
-                id: '31',
-                pid: '3',
-                index: '/system-dialogue',
-                title: '对话记忆列表',
-            },
-            {
-                id: '32',
-                pid: '3',
-                index: '/system-translate',
-                title: '翻译列表',
-            }
-        ],
-    },
-   
+    // {
+    //     id: '3',
+    //     title: '对话管理',
+    //     index: '3',
+    //     icon: 'Calendar',
+    //     children: [
+    //         {
+    //             id: '31',
+    //             pid: '3',
+    //             index: '/system-dialogue',
+    //             title: '对话记忆助手',
+    //         },
+    //         {
+    //             id: '32',
+    //             pid: '3',
+    //             index: '/system-translate',
+    //             title: '翻译助手',
+    //         },
+    //         {
+    //             id: '33',
+    //             pid: '3',
+    //             index: '/system-code',
+    //             title: '代码生成助手',
+    //         },
+    //         {
+    //             id: '34',
+    //             pid: '3',
+    //             index: '/system-class',
+    //             title: '课堂互助问答助手',
+    //         },
+    //         {
+    //             id: '35',
+    //             pid: '3',
+    //             index: '/system-customer',
+    //             title: '智能客服助手',
+    //         },
+    //         {
+    //             id: '36',
+    //             pid: '3',
+    //             index: '/system-guidance',
+    //             title: '智能导诊与患者服务',
+    //         },
+    //         {
+    //             id: '37',
+    //             pid: '3',
+    //             index: '/system-teacher',
+    //             title: '教案生成助手',
+    //         },
+    //         {
+    //             id: '38',
+    //             pid: '3',
+    //             index: '/system-physical',
+    //             title: '线上体检助手',
+    //         },
+    //         {
+    //             id: '39',
+    //             pid: '3',
+    //             index: '/system-man',
+    //             title: '辩论主持人助手',
+    //         },
+    //         {
+    //             id: '40',
+    //             pid: '3',
+    //             index: '/system-sql',
+    //             title: '数据表字段生成助手',
+    //         },
+    //         {
+    //             id: '41',
+    //             pid: '3',
+    //             index: '/system-gang',
+    //             title: '教学大纲生成助手',
+    //         },
+    //         {
+    //             id: '42',
+    //             pid: '3',
+    //             index: '/system-knowledge',
+    //             title: '行业知识库助手',
+    //         },
+    //         {
+    //             id: '43',
+    //             pid: '3',
+    //             index: '/system-subject',
+    //             title: '分层练习题助手',
+    //         },
+    //         {
+    //             id: '44',
+    //             pid: '3',
+    //             index: '/system-lean',
+    //             title: '个性化学习助手',
+    //         },
+    //         {
+    //             id: '45',
+    //             pid: '3',
+    //             index: '/system-qa',
+    //             title: '研发问答助手',
+    //         },
+    //         {
+    //             id: '46',
+    //             pid: '3',
+    //             index: '/system-health',
+    //             title: '心理健康支持助手',
+    //         },
+    //         {
+    //             id: '47',
+    //             pid: '3',
+    //             index: '/system-car',
+    //             title: '汽车故障检修助手',
+    //         },
+    //         {
+    //             id: '48',
+    //             pid: '3',
+    //             index: '/system-virtuallearning',
+    //             title: '虚拟学习伙伴助手',
+    //         },
+    //         {
+    //             id: '49',
+    //             pid: '3',
+    //             index: '/system-treatment',
+    //             title: '治疗虚拟教学培训助手',
+    //         },
+            
+    //     ],
+    // },
+    // {
+    //     id: '4',
+    //     title: '数据备份',
+    //     index: '/system-dataCopy',
+    //     icon: 'DocumentAdd',
+      
+    // },
   
    
     // {

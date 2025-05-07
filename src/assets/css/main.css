@@ -85,3 +85,8 @@ i {
 	--header-text-color: #fff;
 	--active-color: var(--el-color-primary);
 }
+  /* 固定表格行高 */
+  
+  .el-table td.el-table__cell div {
+    height: 40px !important;
+}

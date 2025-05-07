@@ -36,11 +36,11 @@
             </div>
         </div>
         <el-table class="mgb20" :style="{ width: '100%' }" border :data="tableData" :row-key="rowKey"
-            @selection-change="handleSelectionChange" table-layout="auto" @cell-click='handleClickCell'>
+            @selection-change="handleSelectionChange" table-layout="fixed" @cell-click='handleClickCell'>
             <el-table-column type="selection" width="55" v-if="isSelection" align="center"/>
 
             <template v-for="item in columns" :key="item.prop">
-                <el-table-column show-overflow-tooltip v-if="item.visible" :prop="item.prop" :label="item.label" :width="item.width"
+                <el-table-column  v-if="item.visible" :prop="item.prop" :label="item.label" :width="item.width"
                     :type="item.type" :align="item.align || 'center'">
                     
                    
@@ -51,12 +51,12 @@
                         <slot :name="item.prop" :rows="row" :index="$index">
                             <!-- <template v-if="item.prop == 'isAble'">
                                 <el-switch v-model="row[item.prop]" />
-                               
+                               {}
                             </template> -->
                             <template v-if="item.prop == 'operator'">
                                 <el-button v-show='item.operatorType.indexOf("view")!="-1"' :icon="Tickets" plain type="text" @click="viewFunc(row)" style="font-size: 24px;"/>
                                 <el-button  v-show='item.operatorType.indexOf("Edit")!="-1"' :icon="Edit" plain type="text" @click="editFunc(row)" style="font-size: 24px;"/>
-                                <el-button  v-show='item.operatorType.indexOf("Delete")!="-1"' :icon="Delete" plain type="text" @click="handleDelete(row)" style="font-size: 24px;"/>
+                                <el-button  v-show='row.is_deleted=="停用"?false:item.operatorType.indexOf("Delete")!="-1"?true:false' :icon="Delete" plain type="text" @click="handleDelete(row)" style="font-size: 24px;"/>
 
                             </template>
                             <span v-else-if="item.formatter">

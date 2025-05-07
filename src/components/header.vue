@@ -2,8 +2,8 @@
     <div class="header">
         <!-- 折叠按钮 -->
         <div class="header-left">
-            <img class="logo" src="../assets/img/logo.png" alt="" />
-            <div class="web-title">吉斗云AI</div>
+            <img class="logo" src="/image/logono.png" alt="" style="width: 66px;"/>
+            <div class="web-title">吉斗云AI-校园场景风向标</div>
             <div class="collapse-btn" @click="collapseChage">
                 <el-icon v-if="sidebar.collapse">
                     <Expand />
@@ -20,16 +20,7 @@
                         <i class="el-icon-lx-skin"></i>
                     </el-tooltip>
                 </div>
-                <!-- <div class="btn-icon" @click="router.push('/ucenter')">
-                    <el-tooltip
-                        effect="dark"
-                        :content="message ? `有${message}条未读消息` : `消息中心`"
-                        placement="bottom"
-                    >
-                        <i class="el-icon-lx-notice"></i>
-                    </el-tooltip>
-                    <span class="btn-bell-badge" v-if="message"></span>
-                </div> -->
+             
                 <div class="btn-icon" @click="setFullScreen">
                     <el-tooltip effect="dark" content="全屏" placement="bottom">
                         <i class="el-icon-lx-full"></i>
@@ -86,15 +77,11 @@ function loginOutFunction() {
           console.log('响应数据:', response);
           const {code,message} = response;
           if (code == 200) {
-            ElMessage({
-              message: message,
-              type: "success",
-              onClose:function(){
-                localStorage.removeItem('refreshToken');
+            localStorage.removeItem('refreshToken');
         localStorage.removeItem('token');
+        localStorage.removeItem('s_name');
+
         router.push('/login');
-              }
-            });
           
           } 
       })

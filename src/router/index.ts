@@ -94,8 +94,187 @@ const routes: RouteRecordRaw[] = [
                 },
                 component: () => import(/* webpackChunkName: "system-translate" */ '../views/system/translate.vue'),
             },
+            {
+                path: '/system-code',
+                name: 'system-code',
+                meta: {
+                    title: '代码生成助手',
+                    permiss: '34',
+                    requiresAuth:true
+                },
+                component: () => import(/* webpackChunkName: "system-code" */ '../views/system/code.vue'),
+            },
+            {
+                path: '/system-class',
+                name: 'system-class',
+                meta: {
+                    title: '课堂互助问答',
+                    permiss: '35',
+                    requiresAuth:true
+                },
+                component: () => import(/* webpackChunkName: "system-class" */ '../views/system/class.vue'),
+            },
+            {
+                path: '/system-customer',
+                name: 'system-customer',
+                meta: {
+                    title: '智能客服助手',
+                    permiss: '36',
+                    requiresAuth:true
+                },
+                component: () => import(/* webpackChunkName: "system-customer" */ '../views/system/customer.vue'),
+            },
+            {
+                path: '/system-guidance',
+                name: 'system-guidance',
+                meta: {
+                    title: '智能导诊与患者服务',
+                    permiss: '37',
+                    requiresAuth:true
+                },
+                component: () => import(/* webpackChunkName: "system-guidance" */ '../views/system/guidance.vue'),
+            },
+            {
+                path: '/system-teacher',
+                name: 'system-teacher',
+                meta: {
+                    title: '教案生成助手',
+                    permiss: '38',
+                    requiresAuth:true
+                },
+                component: () => import(/* webpackChunkName: "system-teacher" */ '../views/system/teacher.vue'),
+            },
+            {
+                path: '/system-physical',
+                name: 'system-physical',
+                meta: {
+                    title: '线上体检助手',
+                    permiss: '39',
+                    requiresAuth:true
+                },
+                component: () => import(/* webpackChunkName: "system-physical" */ '../views/system/physical.vue'),
+            },
+            {
+                path: '/system-man',
+                name: 'system-man',
+                meta: {
+                    title: '辩论主持人助手',
+                    permiss: '40',
+                    requiresAuth:true
+                },
+                component: () => import(/* webpackChunkName: "system-man" */ '../views/system/man.vue'),
+            },
+            {
+                path: '/system-sql',
+                name: 'system-sql',
+                meta: {
+                    title: '数据表字段生成助手',
+                    permiss: '41',
+                    requiresAuth:true
+                },
+                component: () => import(/* webpackChunkName: "system-sql" */ '../views/system/sql.vue'),
+            },
+            {
+                path: '/system-gang',
+                name: 'system-gang',
+                meta: {
+                    title: '教学大纲生成助手',
+                    permiss: '42',
+                    requiresAuth:true
+                },
+                component: () => import(/* webpackChunkName: "system-gang" */ '../views/system/gang.vue'),
+            },
+            {
+                path: '/system-knowledge',
+                name: 'system-knowledge',
+                meta: {
+                    title: '行业知识库助手',
+                    permiss: '43',
+                    requiresAuth:true
+                },
+                component: () => import(/* webpackChunkName: "system-knowledge" */ '../views/system/knowledge.vue'),
+            },
+            {
+                path: '/system-subject',
+                name: 'system-subject',
+                meta: {
+                    title: '分层练习题助手',
+                    permiss: '44',
+                    requiresAuth:true
+                },
+                component: () => import(/* webpackChunkName: "system-subject" */ '../views/system/subject.vue'),
+            },
+            {
+                path: '/system-lean',
+                name: 'system-lean',
+                meta: {
+                    title: '个性化学习助手',
+                    permiss: '45',
+                    requiresAuth:true
+                },
+                component: () => import(/* webpackChunkName: "system-lean" */ '../views/system/lean.vue'),
+            },
+            {
+                path: '/system-qa',
+                name: 'system-qa',
+                meta: {
+                    title: '研发问答助手',
+                    permiss: '46',
+                    requiresAuth:true
+                },
+                component: () => import(/* webpackChunkName: "system-qa" */ '../views/system/qa.vue'),
+            },
+            {
+                path: '/system-health',
+                name: 'system-health',
+                meta: {
+                    title: '心里健康支持助手',
+                    permiss: '47',
+                    requiresAuth:true
+                },
+                component: () => import(/* webpackChunkName: "system-health" */ '../views/system/health.vue'),
+            },
+            {
+                path: '/system-car',
+                name: 'system-car',
+                meta: {
+                    title: '汽车故障检修助手',
+                    permiss: '48',
+                    requiresAuth:true
+                },
+                component: () => import(/* webpackChunkName: "system-car" */ '../views/system/car.vue'),
+            },
+            {
+                path: '/system-virtuallearning',
+                name: 'system-virtuallearning',
+                meta: {
+                    title: '虚拟学习伙伴助手',
+                    permiss: '49',
+                    requiresAuth:true
+                },
+                component: () => import(/* webpackChunkName: "system-virtuallearning" */ '../views/system/virtuallearning.vue'),
+            },
+            {
+                path: '/system-treatment',
+                name: 'system-treatment',
+                meta: {
+                    title: '治疗虚拟教学培训助手',
+                    permiss: '50',
+                    requiresAuth:true
+                },
+                component: () => import(/* webpackChunkName: "system-treatment" */ '../views/system/treatment.vue'),
+            },
+            {
+                path: '/system-dataCopy',
+                name: 'system-dataCopy',
+                meta: {
+                    title: '数据备份',
+                    permiss: '51',
+                    requiresAuth:true
+                },
+                component: () => import(/* webpackChunkName: "system-dataCopy" */ '../views/system/dataCopy.vue'),
+            },
             
-           
             {
                 path: '/ucenter',
                 name: 'ucenter',

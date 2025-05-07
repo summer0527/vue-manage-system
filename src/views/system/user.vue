@@ -63,14 +63,14 @@
                 <span> 账号： </span>
                 {{ viewData.row.s_name }}
               </p>
-              <p class="viewP">
+              <!-- <p class="viewP">
                 <span> 密码： </span>
                 {{ viewData.row.s_pass }}
-              </p>
-              <p class="viewP">
+              </p> -->
+              <!-- <p class="viewP">
                 <span> 注册时间： </span>
                 {{ viewData.row.created_at }}
-              </p>
+              </p> -->
 
               <p class="viewP">
                 <span> 开启/停用： </span>
@@ -151,6 +151,10 @@ const hanldExport = () => {
 let columns = ref([
   { type: "index", label: "序号", width: 55, align: "center" },
   { prop: "s_name", label: "用户名称" },
+  { prop: "s_college", label: "学院" },
+  { prop: "s_speciality", label: "专业" },
+
+  
   { prop: "s_student_id", label: "学号" },
   { prop: "created_at", label: "注册时间" },
   { prop: "is_deleted", label: "启用/停用" },
@@ -302,7 +306,7 @@ let options = ref<FormOption>({
   list: [
     { type: "input", label: "用户名", prop: "name", required: true },
     { type: "input", label: "手机号", prop: "phone", required: true },
-    { type: "input", label: "密码", prop: "password", required: true },
+    // { type: "input", label: "密码", prop: "password", required: true },
     { type: "input", label: "邮箱", prop: "email", required: true },
     { type: "input", label: "角色", prop: "role", required: true },
   ],

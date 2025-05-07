@@ -44,7 +44,7 @@
 import { ref } from 'vue';
 import { ElMessage, type FormInstance, type FormRules } from 'element-plus';
 
-import { passwordResetApi } from "../../api/index";
+// import { passwordResetApi } from "../../api/index";
 import request from "../../utils/request";
 const param = ref({
     s_name: '',
@@ -118,37 +118,28 @@ const submitForm = (formEl: FormInstance | undefined) => {
   formEl.validate((valid: boolean) => {
     if (valid) {
      
-      request
-        .post(passwordResetApi, param)
-        .then((response) => {
-          // 请求成功，处理响应数据
-          console.log("响应数据:", response);
-          const { code, access_token, refresh_token, s_name, s_id } = response;
-        //   if (code == 201) {
-        //     localStorage.setItem("token", access_token);
-        //     localStorage.setItem("refreshToken", refresh_token);
-        //     localStorage.setItem("s_name", s_name);
-        //     localStorage.setItem("s_id", s_id);
-
-        //     router.push("/dashboard");
-        //   }
-        })
-        .catch((error) => {
-          // 请求失败，处理错误
-          console.log("请求出错:", error);
-          const { code, message } = error.response.data;
-          if (code == 409) {
-            ElMessage({
-              message: message,
-              type: "error",
-            });
-          } else {
-            ElMessage({
-              message: error.response.data,
-              type: "error",
-            });
-          }
-        });
+      // request
+      //   .post(passwordResetApi, param)
+      //   .then((response) => {
+      //     console.log("响应数据:", response);
+      //     const { code, access_token, refresh_token, s_name, s_id } = response;
+      
+      //   })
+      //   .catch((error) => {
+      //     console.log("请求出错:", error);
+      //     const { code, message } = error.response.data;
+      //     if (code == 409) {
+      //       ElMessage({
+      //         message: message,
+      //         type: "error",
+      //       });
+      //     } else {
+      //       ElMessage({
+      //         message: error.response.data,
+      //         type: "error",
+      //       });
+      //     }
+      //   });
     } else {
       ElMessage.error("登录失败");
       return false;
