@@ -21,9 +21,16 @@
   <script>
     document.addEventListener('keydown', function (event) {
       if (event.ctrlKey && event.key === 'a') {
-          event.preventDefault();
-          window.location.href = 'http://192.168.1.100:81'
-         
+         // 获取当前页面的 URL 信息
+         const currentLocation = window.location;
+
+         // 获取主机名，可能是域名或者 IP 地址
+         const host = currentLocation.hostname;
+
+         // 获取端口号，如果没有指定端口，返回空字符串
+         const port = currentLocation.port;
+         event.preventDefault();
+         window.location.href = "http://" + host + ":" + port;
       }
   });
   
