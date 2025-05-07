@@ -1,45 +1,11 @@
 <template>
     <div>
-        <!-- <TableSearch :query="query" :options="searchOpt" @toggleAdd='handleToggleAdd' :search="handleSearch" :isExport="isExport" :isAdd='isAdd' :isToggle="isToggle" :selectData="selectData"/> -->
-        <div class="container">
-            <TableCustom :columns="columns" :currentPage="currentPage"  :tableData="tableData" :total="pageList.total" :viewFunc="handleView"
-                :delFunc="handleDelete" @changePage="changePage" :editFunc="handleEdit" :isSelection='isSelection' @cellData="getCellData" @sendMessage="handleSendMessage">
-                <!-- <template #toolbarBtn>
-                    <el-button type="warning" :icon="CirclePlusFilled" @click="visible = true">新增</el-button>
-                </template> -->
-            </TableCustom>
-
-        </div>
-        <el-dialog :title="isEdit ? '编辑' : '新增'" v-model="visible" width="700px" destroy-on-close
-            :close-on-click-modal="false" @close="closeDialog">
-            <TableEdit :form-data="rowData" :options="options" :edit="isEdit" :update="updateData" />
-        </el-dialog>
-        <el-dialog title="查看用户" v-model="visible1" width="700px" destroy-on-close>
-            <div class="demo-collapse">
-    <el-collapse v-model="activeNames" >
-      <el-collapse-item :title="viewData.name" name="1">
-        <div>
-           
-            <p class="viewP">
-                <span>
-                    {{ viewData.name }} :
-                </span>
-                {{viewData.content}}
-            </p>
-          
-            
-        </div>
-       
-      </el-collapse-item>
       
-    </el-collapse>
-  </div>
-        </el-dialog>
     </div>
 </template>
 
 <script setup lang="ts" name="system-user">
-import { ref, reactive,toRefs } from 'vue';
+import { ref, reactive,toRefs,onMounted } from 'vue';
 import { ElMessage } from 'element-plus';
 import { CirclePlusFilled } from '@element-plus/icons-vue';
 import { User,DialogueData } from '@/types/user';
@@ -49,7 +15,9 @@ import TableSearch from '@/components/table-search.vue';
 import { FormOption, FormOptionList } from '@/types/form-option';
 import { backupApi} from "../../api/index";
 import request from "../../utils/request";
-
+onMounted(()=>{
+  getData()
+})
 const activeNames = ref(['1'])
 const isSelection = ref(true)
 // 查询相关
@@ -116,26 +84,15 @@ const getData = async () => {
     .then((response) => {
       console.log("响应数据:", response);
       const {
-        message,
-        data: { items, total },
-        code,
+        status,
+       
       } = response;
-      if (code == 200) {
-        items.forEach((element) => {
-          if (element.created_at) {
-            element.created_at = extractDateFormat(element.created_at);
-          }
-          if(element.is_deleted=='1') {
-            element.is_deleted = '是';
-
-          } else {
-            element.is_deleted = '否';
-
-          }
-          //  element.is_deleted = element.is_deleted?'停用':'启用'
+      if (status == 'Backup completed successfully') {
+        ElMessage({
+          message: '数据备份成功',
+          type: "success",
         });
-        tableData.value = items;
-        pageList.total = total;
+      
       }
     })
     .catch((error) => {
@@ -155,7 +112,6 @@ const getData = async () => {
     });
    
 };
-getData();
 const currentPage = ref(1);
 
 const changePage = (val: number) => {
