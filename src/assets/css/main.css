@@ -86,7 +86,23 @@ i {
 	--active-color: var(--el-color-primary);
 }
   /* 固定表格行高 */
-  
+  /* 进度条样式 */
   .el-table td.el-table__cell div {
     height: 40px !important;
+}
+.el-table td.el-table__cell .el-progress-bar {
+    height: 6px !important;
+	margin-top: 25px;
+}
+.el-table td.el-table__cell .el-progress-bar__outer {
+    height: 6px !important;
+}
+.el-table td.el-table__cell .el-progress-bar__inner {
+    height: 6px !important;
+}
+.el-progress__text {
+	margin-top: 50px;
+}
+ul.el-upload-list.el-upload-list--text {
+    display: none !important;
 }
