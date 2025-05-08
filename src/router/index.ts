@@ -274,6 +274,16 @@ const routes: RouteRecordRaw[] = [
                 },
                 component: () => import(/* webpackChunkName: "system-dataCopy" */ '../views/system/dataCopy.vue'),
             },
+            {
+                path: '/system-course',
+                name: 'system-course',
+                meta: {
+                    title: '课程管理',
+                    permiss: '52',
+                    requiresAuth:true
+                },
+                component: () => import(/* webpackChunkName: "system-course" */ '../views/system/course.vue'),
+            },
             
             {
                 path: '/ucenter',
