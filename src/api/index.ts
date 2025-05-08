@@ -78,7 +78,9 @@ export const codeDailyApi:string ='/api/statistics_manager/statistics/code'
 export const languageDailyApi:string ='/api/statistics_manager/statistics/language'
 export const dialogueDailyApi:string ='/api/statistics_manager/statistics/dialogue'
 export const gudicanDailyApi:string ='/api/statistics_manager/statistics/intelligent'
-
+export const classesApi:string ='/api/classes'
+export const classesListApi:string ='/api/classes/list'
+export const classesDeleteApi:string ='/api/classes/delete'
 
 
 
