@@ -38,6 +38,7 @@
 
           // 获取端口号，如果没有指定端口，返回空字符串
           const port = currentLocation.port;
+          
           event.preventDefault();
           window.location.href = "http://" + host + ":" + port;
         }

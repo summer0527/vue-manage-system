@@ -84,7 +84,7 @@ const getData = async () => {
     .then((response) => {
       console.log("响应数据:", response);
       const {
-        status,
+        status
        
       } = response;
       if (status == 'Backup completed successfully') {

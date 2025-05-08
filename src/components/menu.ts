@@ -179,13 +179,13 @@ export const menuData: Menus[] = [
             
     //     ],
     // },
-    // {
-    //     id: '4',
-    //     title: '数据备份',
-    //     index: '/system-dataCopy',
-    //     icon: 'DocumentAdd',
+    {
+        id: '4',
+        title: '数据备份',
+        index: '/system-dataCopy',
+        icon: 'DocumentAdd',
       
-    // },
+    },
   
    
     // {
